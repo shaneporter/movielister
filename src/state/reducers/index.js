@@ -28,17 +28,31 @@ const filterMovies = (movies, genres, minimumRating) => {
 
 const moviesReducer = (state = initialState, action) => {
   switch (action.type) {
+
+    // 
+    // TMDb data fetch has begun!
+    //
     case 'FETCH_DATA_PENDING':
       return {
         ...state, 
         fetching: true
       };
+
+    // 
+    // TMDb data fetch has failed
+    // 
     case 'FETCH_DATA_REJECTED':
       return {
         ...state,
         fetching: false,
         error: action.payload
       };
+
+    //
+    // TMDb data fetch has been fulfilled. Essentially, there are movies and genres
+    // at first, all movies are visible
+    // movies are augmented with their genre names (ascertained from their genre ids) 
+    // movies are sorted by popularity descending
     case 'FETCH_DATA_FULFILLED':
       const { moviesResult, movieGenresResult } = action.payload;
 
@@ -61,6 +75,11 @@ const moviesReducer = (state = initialState, action) => {
         movies,
         movieGenres
       };
+
+    //
+    // the selected genres have changed, specifically, a genre's selected state has changed
+    // the genreId and whether it is now selected are supplied in the action payload
+    //
     case 'CHANGE_GENRE':
 
       const { genreId, isSelected } = action.payload;
@@ -79,6 +98,10 @@ const moviesReducer = (state = initialState, action) => {
         movies: filterMovies(state.movies, selectedGenres, state.minimumRating)
       };
 
+    //
+    // the rating has changed, return the state, updating the new minimumRating, as well as movies that
+    // match both the selected genres (these haven't changed in this action), and the new minimumRating
+    //
     case 'CHANGE_MINIMUM_RATING':
       return {
         ...state,
