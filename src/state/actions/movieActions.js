@@ -13,10 +13,17 @@ export function fetchData() {
 
     Promise.all([genres, nowPlaying]).then(values => {
       
-      const genresResult = values[0],
-            movies = values[1],
-            movieGenres = getMovieGenres(genresResult, movies);
+      const genresResult = values[0];
+      let movies = values[1];
+      const movieGenres = getMovieGenres(genresResult, movies);
 
+      // augment the movies with their genres (from their IDs):
+      movies = movies.map(movie => {
+        return Object.assign({
+          genres: movie.genre_ids.map(id => movieGenres.find(genre => genre.id === id).name)
+        }, movie);
+      });
+        
       dispatch({
         type: 'FETCH_DATA_FULFILLED',
         payload: {
