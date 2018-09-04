@@ -2,7 +2,28 @@ import getGenresFromMovies from '../../utils/dataUtils';
 
 const initialState = {
   movies: [],
-  movieGenres: []
+  movieGenres: [],
+  minimumRating: 3
+};
+
+// helper method to filter supplied movies against genres and minimum rating
+const filterMovies = (movies, genres, minimumRating) => {
+  // update the movies' isVisible property, based on an intersection
+  // between the selected genres and the movie's genres, as well as the 
+  // minimum rating:
+  const fm = movies.map(movie => {
+
+    // less efficient, but doing this in two steps for readability:
+    let isVisible = movie.genre_ids.filter(value => -1 !== genres.indexOf(value)).length === genres.length;
+    isVisible = isVisible && movie.vote_average >= minimumRating;
+
+    return {
+      ...movie,
+      isVisible
+    }
+  });
+
+  return fm;
 };
 
 const moviesReducer = (state = initialState, action) => {
@@ -50,24 +71,19 @@ const moviesReducer = (state = initialState, action) => {
       // get selected genre IDs:
       const selectedGenres = newMovieGenres.filter(mg => mg.isSelected).map(mg => mg.id);
 
-      // update the movies' isVisible property, based on an intersection
-      // between the selected genres and the movie's genres:
-      const newMovies = state.movies.map(movie => {
-
-        const isVisible = movie.genre_ids.filter(value => -1 !== selectedGenres.indexOf(value)).length === selectedGenres.length;
-
-        return {
-          ...movie,
-          isVisible
-        }
-      });
-
       return {
         ...state,
         movieGenres: newMovieGenres,
-        movies: newMovies
+        movies: filterMovies(state.movies, selectedGenres, state.minimumRating)
       };
 
+    case 'CHANGE_MINIMUM_RATING':
+      return {
+        ...state,
+        minimumRating: action.payload.minimumRating,
+        movies: filterMovies(state.movies, state.movieGenres.filter(mg => mg.isSelected).map(mg => mg.id), action.payload.minimumRating)
+      }
+      
     default:
       return state;
   }

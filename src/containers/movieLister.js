@@ -3,6 +3,7 @@ import Movie from '../components/movie';
 import GenreList from '../components/genreList';
 import { connect } from 'react-redux';
 import * as movieActions from '../state/actions/movieActions';
+import RatingSelector from '../components/ratingSelector';
 
 class MovieLister extends Component {
   componentDidMount() {
@@ -13,9 +14,10 @@ class MovieLister extends Component {
       <div>
         <h1>Movie Lister</h1>
         <GenreList genres={this.props.movieGenres} onChange={this.props.onChangeGenres} />
+        <RatingSelector minimumRating={this.props.minimumRating} onChange={this.props.onChangeMinimumRating} />
         {
           this.props.movies.filter(movie => movie.isVisible).map(movie => <Movie key={movie.id} genres={movie.genres} 
-             title={movie.title} poster_url={movie.poster_url} />)
+             title={movie.title} posterUrl={movie.poster_url} rating={movie.vote_average} />)
         }
       </div>
     );
@@ -23,17 +25,19 @@ class MovieLister extends Component {
 }
 
 const mapStateToProps = state => {
-  const { movies, movieGenres } = state;
+  const { movies, movieGenres, minimumRating } = state;
   return {
     movies,
-    movieGenres
+    movieGenres,
+    minimumRating
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchData: () => dispatch(movieActions.fetchData()),
-    onChangeGenres: (event) => dispatch(movieActions.changeGenres(+event.target.value, event.target.checked))
+    onChangeGenres: (event) => dispatch(movieActions.changeGenres(+event.target.value, event.target.checked)),
+    onChangeMinimumRating: (event) => dispatch(movieActions.changeMinimumRating(+event.target.value))
   }
 };
 

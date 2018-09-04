@@ -38,3 +38,12 @@ export function changeGenres(genreId, isSelected) {
     }
   }
 }
+
+export function changeMinimumRating(minimumRating) {
+  return {
+    type: 'CHANGE_MINIMUM_RATING',
+    payload: {
+      minimumRating 
+    }
+  }
+}
