@@ -11,8 +11,8 @@ export default function getMovieGenres(allGenres, movies) {
   movies.forEach(movie => movieGenres = movieGenres.concat(movie.genre_ids));
   let uniqueMovieGenres = [...new Set(movieGenres)];
 
-  return allGenres.filter(genre => uniqueMovieGenres.indexOf(genre.id) !== -1).map(genre => ({
+  return allGenres.filter(genre => uniqueMovieGenres.indexOf(genre.id) !== -1).map((genre, index) => ({
     ...genre, 
-    isSelected: true
+    isSelected: !index // just select the first genre
   }));
 }

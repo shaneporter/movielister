@@ -5,23 +5,17 @@ import { connect } from 'react-redux';
 import * as movieActions from '../state/actions/movieActions';
 
 class MovieLister extends Component {
-  constructor() {
-    super();
-    this.onChangeGenre = this.onChangeGenre.bind(this);
-  }
   componentDidMount() {
     this.props.fetchData();
-  }
-  onChangeGenre(e) {
-    console.log('genre change', e.target.value, e.target.checked);
   }
   render() {
     return (
       <div>
         <h1>Movie Lister</h1>
-        <GenreList genres={this.props.movieGenres} onChange={this.onChangeGenre} />
+        <GenreList genres={this.props.movieGenres} onChange={this.props.onChangeGenres} />
         {
-          this.props.movies.map(movie => <Movie key={movie.id} {...movie} />)
+          this.props.movies.filter(movie => movie.isVisible).map(movie => <Movie key={movie.id} genres={movie.genres} 
+             title={movie.title} poster_url={movie.poster_url} />)
         }
       </div>
     );
@@ -38,7 +32,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchData: () => dispatch(movieActions.fetchData())
+    fetchData: () => dispatch(movieActions.fetchData()),
+    onChangeGenres: (event) => dispatch(movieActions.changeGenres(event.target.value, event.target.checked))
   }
 };
 

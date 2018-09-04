@@ -17,10 +17,13 @@ export function fetchData() {
       let movies = values[1];
       const movieGenres = getMovieGenres(genresResult, movies);
 
-      // augment the movies with their genres (from their IDs):
+      // augment the movies with their genres (from their IDs),
+      // and whether they are visible, based on the first (default selected)
+      // genre
       movies = movies.map(movie => {
         return Object.assign({
-          genres: movie.genre_ids.map(id => movieGenres.find(genre => genre.id === id).name)
+          genres: movie.genre_ids.map(id => movieGenres.find(genre => genre.id === id).name),
+          isVisible: movie.genre_ids.indexOf(movieGenres[0].id) !== -1
         }, movie);
       });
         
@@ -39,5 +42,15 @@ export function fetchData() {
         }
       });
     });
+  }
+}
+
+export function changeGenres(genreId, isSelected) {
+  return {
+    type: 'CHANGE_GENRE',
+    payload: {
+      genreId,
+      isSelected
+    }
   }
 }
