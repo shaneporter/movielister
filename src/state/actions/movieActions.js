@@ -5,6 +5,9 @@ export function fetchData() {
   return (dispatch) => {
 
     // we're getting the data:
+
+    // actually, it's debateable that this needs to be dispatched, 
+    // since the default state is 'fetching'
     dispatch({
       type: 'FETCH_DATA_PENDING'
     });

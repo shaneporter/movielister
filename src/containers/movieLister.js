@@ -5,44 +5,59 @@ import { connect } from 'react-redux';
 import * as movieActions from '../state/actions/movieActions';
 import RatingSelector from '../components/ratingSelector';
 
-import { Main, Sub, NoMovies } from '../styles';
+import { Loader, Main, Sub, NoMovies } from '../styles';
+import loader from '../loader.svg';
 
 class MovieLister extends Component {
   componentDidMount() {
     this.props.fetchData();
   }
 
-  showResults(movies) {
+  showMovies(movies) {
     if(movies.length) {
       return movies.map(movie => <Movie key={movie.id} genres={movie.genres} 
-         title={movie.title} posterUrl={movie.poster_url} rating={movie.vote_average} />);
+        title={movie.title} posterUrl={movie.poster_url} rating={movie.vote_average} />);
     } else {
       return <NoMovies>No movies found, try decreasing the minimum rating and/or deselecting some selected genres.</NoMovies>
     }
   }
-  
-  render() {
-    return (
-      <Main>
+
+  showOutput() {
+
+    if(this.props.fetching) {
+      return <Loader src={loader} alt="Loading" />
+    } else if(this.props.fetched) {
+
+      const visibleMovies = this.props.movies.filter(movie => movie.isVisible);
+      
+      return <Main> 
         <Sub filters>
           <h4>Genres:</h4>
           <GenreList genres={this.props.movieGenres} onChange={this.props.onChangeGenres} />
           <RatingSelector minimumRating={this.props.minimumRating} onChange={this.props.onChangeMinimumRating} />
         </Sub>
         <Sub>
-          {this.showResults(this.props.movies.filter(movie => movie.isVisible))}
+          {this.showMovies(visibleMovies)}
         </Sub>
       </Main>
-    );
+    } else {
+      return null;
+    }
+  }
+  
+  render() {
+    return this.showOutput();
   }
 }
 
 const mapStateToProps = state => {
-  const { movies, movieGenres, minimumRating } = state;
+  const { movies, movieGenres, minimumRating, fetching, fetched } = state;
   return {
     movies,
     movieGenres,
-    minimumRating
+    minimumRating,
+    fetching,
+    fetched
   }
 };
 

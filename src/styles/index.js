@@ -2,6 +2,7 @@ import styled, { injectGlobal, css } from 'styled-components';
 import "typeface-roboto";
 
 const tileWidth = '200px';
+const orange = '#f0ad4e;';
 
 injectGlobal`
   html, body {
@@ -19,6 +20,13 @@ export const Main = styled.div`
     display: table;
     clear: both;
   }
+`;
+
+export const Loader = styled.img`
+  display: block;
+  margin: 80px auto;
+  width: 80px;
+  height: 80px;
 `;
 
 export const Sub = styled.div`
@@ -60,6 +68,7 @@ export const MovieTile = styled.div`
     text-align: center;
     margin: 10px;
     height: 38px;
+    color: #393939;
   }
 
   &:hover {
@@ -78,6 +87,7 @@ export const Genres = styled.ul`
     list-style-type: none;
     display: inline-block;
     margin: 4px;
+    background: #ffedcc;
   }
 `;
 
@@ -95,6 +105,6 @@ export const Rating = styled.div`
 
 export const NoMovies = styled.div`
   margin: 12px;
-  background: #f0ad4e;
+  background: ${orange};
   padding: 10px;
 `;

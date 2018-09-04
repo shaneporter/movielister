@@ -4,7 +4,7 @@ import { MovieTile, Genres } from '../styles';
 class Movie extends Component {
   render() {
     return (
-      <MovieTile>
+      <MovieTile className={this.props.isVisible ? 'show' : ''}>
         <img src={this.props.posterUrl} alt={this.props.title} />
         <h4>{this.props.title}</h4>
         <Genres>

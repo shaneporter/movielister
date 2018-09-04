@@ -3,7 +3,9 @@ import getGenresFromMovies from '../../utils/dataUtils';
 const initialState = {
   movies: [],
   movieGenres: [],
-  minimumRating: 3
+  minimumRating: 3,
+  fetching: true,
+  fetched: false
 };
 
 // helper method to filter supplied movies against genres and minimum rating
