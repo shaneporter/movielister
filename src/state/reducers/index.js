@@ -25,7 +25,37 @@ const moviesReducer = (state = initialState, action) => {
         fetched: true,
         movies,
         movieGenres
-      }
+      };
+    case 'CHANGE_GENRE':
+
+      const { genreId, isSelected } = action.payload;
+
+      const newMovieGenres = state.movieGenres.map(mg => mg.id === genreId ? {
+        ...mg,
+        isSelected
+      } : mg);
+
+      // get selected genres:
+      const selectedGenres = newMovieGenres.filter(mg => mg.isSelected).map(mg => mg.id);
+
+      // update the movies' isVisible property, based on an intersection
+      // between the selected genres and the movie's genres:
+      const newMovies = state.movies.map(movie => {
+
+        const isVisible = movie.genre_ids.filter(value => -1 !== selectedGenres.indexOf(value)).length === selectedGenres.length;
+
+        return {
+          ...movie,
+          isVisible
+        }
+      });
+
+      return {
+        ...state,
+        movieGenres: newMovieGenres,
+        movies: newMovies
+      };
+
     default:
       return state;
   }

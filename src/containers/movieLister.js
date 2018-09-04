@@ -33,7 +33,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchData: () => dispatch(movieActions.fetchData()),
-    onChangeGenres: (event) => dispatch(movieActions.changeGenres(event.target.value, event.target.checked))
+    onChangeGenres: (event) => dispatch(movieActions.changeGenres(+event.target.value, event.target.checked))
   }
 };
 
