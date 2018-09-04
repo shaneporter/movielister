@@ -44,8 +44,10 @@ const moviesReducer = (state = initialState, action) => {
 
       const movieGenres = getGenresFromMovies(movieGenresResult, moviesResult);
 
-      // by default, all movies are visible:
-      const movies = moviesResult.map(movie => {
+      // by default, all movies are visible.
+      // assign a genres property, an array of genre id translated to name
+      // sort by popularity, only need to do it here
+      let movies = moviesResult.sort((movieA, movieB) => movieB.popularity - movieA.popularity).map(movie => {
         return Object.assign({
           genres: movie.genre_ids.map(id => movieGenres.find(genre => genre.id === id).name),
           isVisible: true
