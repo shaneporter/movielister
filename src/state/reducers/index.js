@@ -1,3 +1,5 @@
+import getGenresFromMovies from '../../utils/dataUtils';
+
 const initialState = {
   movies: [],
   movieGenres: []
@@ -17,7 +19,17 @@ const moviesReducer = (state = initialState, action) => {
         error: action.payload
       };
     case 'FETCH_DATA_FULFILLED':
-      const { movies, movieGenres } = action.payload;
+      const { moviesResult, movieGenresResult } = action.payload;
+
+      const movieGenres = getGenresFromMovies(movieGenresResult, moviesResult);
+
+      // by default, all movies are visible:
+      const movies = moviesResult.map(movie => {
+        return Object.assign({
+          genres: movie.genre_ids.map(id => movieGenres.find(genre => genre.id === id).name),
+          isVisible: true
+        }, movie);
+      });
 
       return {
         ...state,
@@ -35,7 +47,7 @@ const moviesReducer = (state = initialState, action) => {
         isSelected
       } : mg);
 
-      // get selected genres:
+      // get selected genre IDs:
       const selectedGenres = newMovieGenres.filter(mg => mg.isSelected).map(mg => mg.id);
 
       // update the movies' isVisible property, based on an intersection

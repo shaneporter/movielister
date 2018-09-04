@@ -1,4 +1,4 @@
-export default function getMovieGenres(allGenres, movies) {
+export default function getGenresFromMovies(allGenres, movies) {
   let genres = {};
 
   // convert genres to associative array (for easier access later):

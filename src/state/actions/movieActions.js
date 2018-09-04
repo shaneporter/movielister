@@ -1,5 +1,4 @@
 import movieApi from '../../api/movieApi';
-import getMovieGenres from '../../utils/dataUtils';
 
 export function fetchData() {
   return (dispatch) => {
@@ -11,27 +10,12 @@ export function fetchData() {
           nowPlaying = api.getNowPlaying(),
           genres = api.getGenres();
 
-    Promise.all([genres, nowPlaying]).then(values => {
-      
-      const genresResult = values[0];
-      let movies = values[1];
-      const movieGenres = getMovieGenres(genresResult, movies);
-
-      // augment the movies with their genres (from their IDs),
-      // and whether they are visible, based on the first (default selected)
-      // genre
-      movies = movies.map(movie => {
-        return Object.assign({
-          genres: movie.genre_ids.map(id => movieGenres.find(genre => genre.id === id).name),
-          isVisible: movie.genre_ids.indexOf(movieGenres[0].id) !== -1
-        }, movie);
-      });
-        
+    Promise.all([genres, nowPlaying]).then(values => {  
       dispatch({
         type: 'FETCH_DATA_FULFILLED',
         payload: {
-          movies,
-          movieGenres
+          moviesResult: values[1],
+          movieGenresResult: values[0]
         }
       });    
     }).catch(err => {
