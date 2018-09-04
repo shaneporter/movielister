@@ -26,4 +26,6 @@ As previously mentioned, this React app was bootstrapped using create-react-app.
 
 For some level of simplicity, I kept the reducer count to just 1; an option would be to use a couple of reducers, 1 for the Movies, 1 for the Genres - and use combineReducers to 'merge' the state.
 
+UI is fairly straightforward and is best described as 'simple'. I hand wrote the CSS, and opted for a two column layout with a fixed layout for the filters and a percentage width based column for the movie results. There are no media queries - perhaps this is something that I could work on, but it should work fine with mobile devices. I used styled-components for the styling - I really like some of its benefits.
+
 **At present, there are no additional Jest tests, but I am working on that**
