@@ -4,6 +4,8 @@
 
 This is a little React app, using create-react-app as a starting point, that uses the TMDb API to display a list of 'now showing movies'. The user can filter the movies by genre and rating.
 
+To get it up and running, clone the repo, and do the npm intall, npm start thing 😀
+
 The following APIs are used:
 
 - TMDb Movies Now Playing;
