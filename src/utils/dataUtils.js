@@ -13,6 +13,6 @@ export default function getGenresFromMovies(allGenres, movies) {
 
   return allGenres.filter(genre => uniqueMovieGenres.indexOf(genre.id) !== -1).map((genre, index) => ({
     ...genre, 
-    isSelected: !index // just select the first genre
+    isSelected: false // default to no selected genres
   }));
 }
