@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Rating } from '../styles';
 
 class RatingSelector extends Component {
   constructor() {
@@ -9,13 +10,17 @@ class RatingSelector extends Component {
   }
   render() {
     return (
-      <select value={this.props.minimumRating} onChange={this.props.onChange}>
-        {
-          this.state.ratings.map(rating => 
-            <option value={rating} key={rating}>{rating}</option>
-          )
-        }
-      </select>
+      <Rating>
+        <label>Minimum Average Rating: 
+        <select value={this.props.minimumRating} onChange={this.props.onChange}>
+          {
+            this.state.ratings.map(rating => 
+              <option value={rating} key={rating}>{rating}</option>
+            )
+          }
+        </select>
+        </label>
+      </Rating>
     );
   }
 }

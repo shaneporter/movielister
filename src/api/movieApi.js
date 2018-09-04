@@ -1,7 +1,7 @@
 export default class movieApi {
   constructor() {
     this.apiKey = '9123f3ddfdf6b3d34394290cd8d96cdc';
-    this.posterUrlPrefix = 'https://image.tmdb.org/t/p/w200/';
+    this.posterUrlPrefix = 'https://image.tmdb.org/t/p/w300/';
     this.posterUrlSuffix = '.jpg';
   }
   getNowPlaying() {

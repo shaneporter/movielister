@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import * as movieActions from '../state/actions/movieActions';
 import RatingSelector from '../components/ratingSelector';
 
+import { Main, Sub, NoMovies } from '../styles';
+
 class MovieLister extends Component {
   componentDidMount() {
     this.props.fetchData();
@@ -15,18 +17,22 @@ class MovieLister extends Component {
       return movies.map(movie => <Movie key={movie.id} genres={movie.genres} 
          title={movie.title} posterUrl={movie.poster_url} rating={movie.vote_average} />);
     } else {
-      return <div>No movies found, try decreasing the minimum rating and/or selected genres.</div>
+      return <NoMovies>No movies found, try decreasing the minimum rating and/or deselecting some selected genres.</NoMovies>
     }
   }
   
   render() {
     return (
-      <div>
-        <h1>Movie Lister</h1>
-        <GenreList genres={this.props.movieGenres} onChange={this.props.onChangeGenres} />
-        <RatingSelector minimumRating={this.props.minimumRating} onChange={this.props.onChangeMinimumRating} />
-        {this.showResults(this.props.movies.filter(movie => movie.isVisible))}
-      </div>
+      <Main>
+        <Sub filters>
+          <h4>Genres:</h4>
+          <GenreList genres={this.props.movieGenres} onChange={this.props.onChangeGenres} />
+          <RatingSelector minimumRating={this.props.minimumRating} onChange={this.props.onChangeMinimumRating} />
+        </Sub>
+        <Sub>
+          {this.showResults(this.props.movies.filter(movie => movie.isVisible))}
+        </Sub>
+      </Main>
     );
   }
 }
