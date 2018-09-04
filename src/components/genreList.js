@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+// TODO: convert to functional component
 class GenreList extends Component {
   render() {
     return (
