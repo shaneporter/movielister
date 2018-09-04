@@ -1,34 +1,16 @@
 import React, { Component } from 'react';
 import Movie from '../components/movie';
 import GenreList from '../components/genreList';
-import movieApi from '../api/movieApi';
-import getMovieGenres from '../utils/dataUtils';
+import { connect } from 'react-redux';
+import * as movieActions from '../state/actions/movieActions';
 
 class MovieLister extends Component {
   constructor() {
     super();
-    this.movieApi = new movieApi();
     this.onChangeGenre = this.onChangeGenre.bind(this);
-    this.state = {
-      movies: [],
-      movieGenres: []
-    }
   }
   componentDidMount() {
-    const nowPlaying = this.movieApi.getNowPlaying();
-    const genres = this.movieApi.getGenres();
-
-    Promise.all([genres, nowPlaying]).then(values => {
-      
-      const genresResult = values[0],
-            movies = values[1],
-            movieGenres = getMovieGenres(genresResult, movies);
-
-      this.setState({
-        movies,
-        movieGenres
-      })
-    });
+    this.props.fetchData();
   }
   onChangeGenre(e) {
     console.log('genre change', e.target.value, e.target.checked);
@@ -37,14 +19,27 @@ class MovieLister extends Component {
     return (
       <div>
         <h1>Movie Lister</h1>
-        <GenreList genres={this.state.movieGenres} onChange={this.onChangeGenre} />
+        <GenreList genres={this.props.movieGenres} onChange={this.onChangeGenre} />
         {
-          this.state.movies.map(movie => <Movie key={movie.id} {...movie} />)
+          this.props.movies.map(movie => <Movie key={movie.id} {...movie} />)
         }
-        
       </div>
     );
   }
 }
 
-export default MovieLister;
+const mapStateToProps = state => {
+  const { movies, movieGenres } = state;
+  return {
+    movies,
+    movieGenres
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchData: () => dispatch(movieActions.fetchData())
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieLister);
