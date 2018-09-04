@@ -5,7 +5,8 @@ const initialState = {
   movieGenres: [],
   minimumRating: 3,
   fetching: true,
-  fetched: false
+  fetched: false,
+  error: null
 };
 
 // helper method to filter supplied movies against genres and minimum rating
@@ -47,7 +48,7 @@ const moviesReducer = (state = initialState, action) => {
       return {
         ...state,
         fetching: false,
-        error: action.payload
+        error: action.payload.error
       };
 
     //

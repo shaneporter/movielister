@@ -4,6 +4,13 @@ import "typeface-roboto";
 const tileWidth = '200px';
 const orange = '#f0ad4e;';
 
+const messageBar = (color) => {
+  return `margin: 12px;
+  background: ${color};
+  color: white;
+  padding: 10px;`
+}
+
 injectGlobal`
   html, body {
     font-family: 'Roboto', sans-serif;
@@ -104,7 +111,9 @@ export const Rating = styled.div`
 `;
 
 export const NoMovies = styled.div`
-  margin: 12px;
-  background: ${orange};
-  padding: 10px;
+  ${messageBar(orange)}
+`;
+
+export const Error = styled.div`
+  ${messageBar('#d9534f')}
 `;

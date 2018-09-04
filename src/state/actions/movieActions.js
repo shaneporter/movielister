@@ -28,13 +28,12 @@ export function fetchData() {
           movieGenresResult: values[0]
         }
       });    
-    }).catch(err => {
-
+    }).catch(error => {
       // oh dear, something's gone wrong:
       dispatch({
         type: 'FETCH_DATA_REJECTED',
         payload: {
-          err
+          error: error.message
         }
       });
     });

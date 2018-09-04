@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as movieActions from '../state/actions/movieActions';
 import RatingSelector from '../components/ratingSelector';
 
-import { Loader, Main, Sub, NoMovies } from '../styles';
+import { Loader, Error, Main, Sub, NoMovies } from '../styles';
 import loader from '../loader.svg';
 
 class MovieLister extends Component {
@@ -26,6 +26,8 @@ class MovieLister extends Component {
 
     if(this.props.fetching) {
       return <Loader src={loader} alt="Loading" />
+    } else if(this.props.error) {
+      return <Error>Something went wrong. Error message: {this.props.error}</Error>
     } else if(this.props.fetched) {
 
       const visibleMovies = this.props.movies.filter(movie => movie.isVisible);
@@ -51,13 +53,14 @@ class MovieLister extends Component {
 }
 
 const mapStateToProps = state => {
-  const { movies, movieGenres, minimumRating, fetching, fetched } = state;
+  const { movies, movieGenres, minimumRating, fetching, fetched, error } = state;
   return {
     movies,
     movieGenres,
     minimumRating,
     fetching,
-    fetched
+    fetched,
+    error
   }
 };
 
