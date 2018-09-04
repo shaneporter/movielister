@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Movie from '../components/movie';
 import GenreList from '../components/genreList';
 import movieApi from '../api/movieApi';
+import getMovieGenres from '../utils/dataUtils';
 
 class MovieLister extends Component {
   constructor() {
@@ -20,30 +21,8 @@ class MovieLister extends Component {
     Promise.all([genres, nowPlaying]).then(values => {
       
       const genresResult = values[0],
-            movies = values[1];
-
-      let genres = {};
-
-      // convert genres to associative array (for easier access later):
-      genresResult.forEach(genre => {
-        genres[genre.id] = genre.name
-      });
-        
-      /*
-        genres = values[0],
-        movies = values[1]
-      */
-      
-      // get unique genres from returned films:
-      let movieGenres = [];
-      movies.forEach(movie => movieGenres = movieGenres.concat(movie.genre_ids));
-      let uniqueMovieGenres = [...new Set(movieGenres)];
-      //movieGenres = uniqueMovieGenres.filter(genre => movieGenres.indexOf(genre.id) !== -1);
-
-      movieGenres = genresResult.filter(genre => uniqueMovieGenres.indexOf(genre.id) !== -1).map(genre => ({
-        ...genre,
-        isSelected: true
-      }));
+            movies = values[1],
+            movieGenres = getMovieGenres(genresResult, movies);
 
       this.setState({
         movies,
