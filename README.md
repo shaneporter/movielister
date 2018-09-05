@@ -1,23 +1,33 @@
-# Movie listings challenge
+# Movie listings
 
-## Brief
+## Overview
 
-Using the TMDb API display a list of now showing movies allowing the user to filter by genre and rating.
+This is a little React app, using create-react-app as a starting point, that uses the TMDb API to display a list of 'now showing movies'. The user can filter the movies by genre and rating.
 
-> Note: [You’ll need an TMDb account][tmdb-signup] to request an API key. Once you are registered, go to account settings and click 'API' in sidebar.
+To get it up and running, clone the repo, and do the `npm install`, `npm start` thing 😀
 
-## Input
+The following APIs are used:
 
-* [TMDb Movies Now Playing API][tmdb-now-playing]
-* [TMDb Movie genres API][tmdb-genres]
-* [TMDb Image API][tmdb-images]
-* Minimum rating input with a range between 0 and 10, increments of 0.5 and a default set to 3.
-* Multiple genres input (checkboxes). Must only contain genres from the TMDb API that are in the returned movie result set.
+- TMDb Movies Now Playing;
+- TMDb Movie Genres;
+- TMDb Image API.
 
-## Output
+The user filters the movie results using the following:
 
-* Display a list of movies, each showing their title, genres and poster image.
-* The movies should be ordered by popularity (most popular first - `popularity` property).
-* Movies should be filterable by multiple genres, the user should have the ability to toggle movies depending on all of its assigned genres. For example if 'Action' and 'Drama' genres are selected listed movies must have **both** 'Action' and 'Drama' genres.
-* Movies should also be filterable by their rating (`vote_average` property). i.e If rating was set to 5, you would expect to see all movies with a rating of 5 or higher.
-* The input API's should only be called once.
+- Minimum Rating select with values ranging from 0 to 10 with a step of 0.5. Defaults to 3;
+- Multiple Genres, derived from the genres from the returned movies. Defaults to none selected. For each selected genre, only those movies with **all** of those genres will be shown.
+
+For the results:
+
+- Each shows a poster image, title and genres;
+- Movies are ordered by popularity in descending order (most popular first);
+
+## Implementation
+
+As previously mentioned, this React app was bootstrapped using create-react-app. Despite the size of the app, it also demonstrates Redux, React-redux and Redux-thunk.
+
+For some level of simplicity, I kept the reducer count to just 1; an option would be to use a couple of reducers, 1 for the Movies, 1 for the Genres - and use combineReducers to 'merge' the state.
+
+UI is fairly straightforward and is best described as 'simple'. I hand wrote the CSS, and opted for a two column layout with a fixed layout for the filters and a percentage width based column for the movie results. There are no media queries - perhaps this is something that I could work on, but it should work fine with mobile devices. I used styled-components for the styling - I really like some of its benefits.
+
+**At present, there are no additional Jest tests, but I am working on that**
