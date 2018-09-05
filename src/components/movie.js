@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { MovieTile, Genres } from '../styles';
+import PropTypes from 'prop-types';
 
 class Movie extends Component {
   render() {
@@ -17,5 +18,12 @@ class Movie extends Component {
     );
   }
 }
+
+Movie.propTypes = {
+  isVisible: PropTypes.bool.isRequired,
+  posterUrl: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  genres: PropTypes.array.isRequired
+};
 
 export default Movie;

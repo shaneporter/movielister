@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Rating } from '../styles';
+import PropTypes from 'prop-types';
 
 class RatingSelector extends Component {
   constructor() {
@@ -24,5 +25,10 @@ class RatingSelector extends Component {
     );
   }
 }
+
+RatingSelector.propTypes = {
+  minimumRating: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default RatingSelector;

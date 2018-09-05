@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 // TODO: convert to functional component
 class GenreList extends Component {
@@ -17,5 +18,10 @@ class GenreList extends Component {
     );
   }
 }
+
+GenreList.propTypes = {
+  genres: PropTypes.array,
+  onChange: PropTypes.func.isRequired
+};
 
 export default GenreList;

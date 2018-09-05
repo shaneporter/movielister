@@ -8,6 +8,8 @@ import RatingSelector from '../components/ratingSelector';
 import { Loader, Error, Main, Sub, NoMovies } from '../styles';
 import loader from '../loader.svg';
 
+import PropTypes from 'prop-types';
+
 class MovieLister extends Component {
   componentDidMount() {
     this.props.fetchData();
@@ -51,6 +53,15 @@ class MovieLister extends Component {
     return this.showOutput();
   }
 }
+
+MovieLister.propTypes = {
+  movies: PropTypes.array,
+  movieGenres: PropTypes.array,
+  minimumRating: PropTypes.number.isRequired,
+  fetching: PropTypes.bool.isRequired,
+  fetched: PropTypes.bool.isRequired,
+  error: PropTypes.object,
+};
 
 const mapStateToProps = state => {
   const { movies, movieGenres, minimumRating, fetching, fetched, error } = state;
