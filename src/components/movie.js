@@ -1,22 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { MovieTile, Genres } from '../styles';
 import PropTypes from 'prop-types';
 
-class Movie extends Component {
-  render() {
-    return (
-      <MovieTile className={this.props.isVisible ? 'show' : ''}>
-        <img src={this.props.posterUrl} alt={this.props.title} />
-        <h4>{this.props.title}</h4>
-        <Genres>
-        {
-          this.props.genres.map(genre => <li key={genre}>{genre}</li>)
-        }
-        </Genres>
-        {/* <div>{this.props.rating}</div> */}
-      </MovieTile>
-    );
-  }
+const Movie = ({isVisible, posterUrl, title, genres}) => {
+  return (
+    <MovieTile className={isVisible ? 'show' : ''}>
+      <img src={posterUrl} alt={title} />
+      <h4>{title}</h4>
+      <Genres>
+      {
+        genres.map(genre => <li key={genre}>{genre}</li>)
+      }
+      </Genres>
+    </MovieTile>
+  );
 }
 
 Movie.propTypes = {
