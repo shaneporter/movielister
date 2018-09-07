@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const GenreList = (props) => {
+const GenreList = ({genres, onChange}) => {
   return (
     <div>
       {
-        props.genres.map(genre => 
+        genres.map(genre => 
           <label key={genre.name}>
             <input type="checkbox" value={genre.id} defaultChecked={genre.isSelected} 
-              onChange={props.onChange} />{genre.name}
+              onChange={onChange} />{genre.name}
           </label>
         )
       }

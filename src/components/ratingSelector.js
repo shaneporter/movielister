@@ -6,14 +6,17 @@ class RatingSelector extends Component {
   constructor() {
     super();
     this.state = {
+      // for more generic component, it would be a good idea to pass this
+      // in as a prop:
       ratings: new Array(21).fill().map((d, i) => (i * 0.5) + 0)
     }
   }
   render() {
+    const { minimumRating, onChange } = this.props;
     return (
       <Rating>
         <label>Minimum Average Rating: 
-        <select value={this.props.minimumRating} onChange={this.props.onChange}>
+        <select value={minimumRating} onChange={onChange}>
           {
             this.state.ratings.map(rating => 
               <option value={rating} key={rating}>{rating}</option>

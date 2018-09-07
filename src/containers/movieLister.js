@@ -26,19 +26,21 @@ class MovieLister extends Component {
 
   showOutput() {
 
-    if(this.props.fetching) {
-      return <Loader src={loader} alt="Loading" />
-    } else if(this.props.error) {
-      return <Error>Something went wrong. Error message: {this.props.error}</Error>
-    } else if(this.props.fetched) {
+    const { movies, movieGenres, minimumRating, fetching, fetched, error, onChangeGenres, onChangeMinimumRating } = this.props;
 
-      const visibleMovies = this.props.movies.filter(movie => movie.isVisible);
+    if(fetching) {
+      return <Loader src={loader} alt="Loading" />
+    } else if(error) {
+      return <Error>Something went wrong. Error message: {error}</Error>
+    } else if(fetched) {
+
+      const visibleMovies = movies.filter(movie => movie.isVisible);
       
       return <Main> 
         <Sub filters>
           <h4>Genres:</h4>
-          <GenreList genres={this.props.movieGenres} onChange={this.props.onChangeGenres} />
-          <RatingSelector minimumRating={this.props.minimumRating} onChange={this.props.onChangeMinimumRating} />
+          <GenreList genres={movieGenres} onChange={onChangeGenres} />
+          <RatingSelector minimumRating={minimumRating} onChange={onChangeMinimumRating} />
         </Sub>
         <Sub>
           {this.showMovies(visibleMovies)}
@@ -61,6 +63,8 @@ MovieLister.propTypes = {
   fetching: PropTypes.bool.isRequired,
   fetched: PropTypes.bool.isRequired,
   error: PropTypes.object,
+  onChangeGenres: PropTypes.func.isRequired,
+  onChangeMinimumRating: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
