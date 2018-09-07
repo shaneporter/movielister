@@ -30,4 +30,4 @@ For some level of simplicity, I kept the reducer count to just 1; an option woul
 
 UI is fairly straightforward and is best described as 'simple'. I hand wrote the CSS, and opted for a two column layout with a fixed layout for the filters and a percentage width based column for the movie results. There are no media queries - perhaps this is something that I could work on, but it should work fine with mobile devices. I used styled-components for the styling - I really like some of its benefits.
 
-**At present, there are no additional Jest tests, but I am working on that**
+**At present, there are no additional Jest tests (but this is a big TODO!)**
